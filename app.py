@@ -23,10 +23,10 @@ if st.button("🔍 Verifiko lajmin"):
         x = vectorizer.transform([news])
         prediction = model.predict(x)
 
-        if prediction[0] == "FAKE":
-            st.error("🎉 Ky është një LAJM I RREMË!")
-        else:
-            st.success("✅ Ky është një LAJM I VËRTETË!")
+      if prediction[0] == 0:
+    st.error("🎉 Ky është një LAJM I RREMË!")
+else:
+    st.success("✅ Ky është një LAJM I VËRTETË!")
 
 st.markdown("---")
 st.caption("Punuar si pjesë e temës së diplomës në Fakultetin e Teknologjisë së Informacionit.")
