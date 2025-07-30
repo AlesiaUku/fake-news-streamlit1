@@ -1,34 +1,32 @@
 import streamlit as st
 import joblib
 
-# Ngarkimi i modelit dhe vectorizer-it
-model = joblib.load("rf_model.pkl")
+# Ngarko modelin Passive Aggressive dhe vectorizer-in
+model = joblib.load("pac_model.pkl")
 vectorizer = joblib.load("vectorizer.pkl")
 
-# Header personalizuar me emrin e universitetit
-st.image("https://upload.wikimedia.org/wikipedia/sq/f/fc/Logo_-_Universiteti_Politeknik_i_Tiranës.png", width=100)
+# UI
+st.set_page_config(page_title="Detektues Lajmesh", layout="centered")
 st.title("🎓 Universiteti Politeknik i Tiranës")
-st.subheader("📘 Detektues i Lajmeve të Rreme")
+st.header("📘 Detektues i Lajmeve të Rreme")
+
 st.markdown("""
-Ky aplikacion përdor algoritmin **Random Forest** për të zbuluar nëse një lajm është i **vërtetë** apo **i rremë**, në bazë të analizës së përmbajtjes së tij.
+Ky aplikacion përdor algoritmin **Passive Aggressive Classifier** për të zbuluar nëse një lajm është i **vërtetë** apo i **rremë**, në bazë të përmbajtjes së tij.
 """)
 
-# Input nga përdoruesi
-user_input = st.text_area("📝 Shkruani lajmin që dëshironi të verifikoni:")
+news = st.text_area("📰 Shkruani lajmin që dëshironi të verifikoni:")
 
-# Butoni për analizë
 if st.button("🔍 Verifiko lajmin"):
-    if user_input.strip() == "":
-        st.warning("Ju lutem shkruani një lajm për të vazhduar.")
+    if news.strip() == "":
+        st.warning("Ju lutem shkruani një lajm për ta analizuar.")
     else:
-        vec = vectorizer.transform([user_input])
-        pred = model.predict(vec)[0]
+        x = vectorizer.transform([news])
+        prediction = model.predict(x)
 
-        if pred == 1:
-            st.success("✅ Ky është një LAJM I VËRTETË!")
+        if prediction[0] == "FAKE":
+            st.error("🎉 Ky është një LAJM I RREMË!")
         else:
-            st.error("🚨 Ky është një LAJM I RREMË!")
+            st.success("✅ Ky është një LAJM I VËRTETË!")
 
-# Footer
 st.markdown("---")
 st.caption("Punuar si pjesë e temës së diplomës në Fakultetin e Teknologjisë së Informacionit.")
