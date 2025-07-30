@@ -32,4 +32,4 @@ if st.button("🔍 Verifiko lajmin"):
 
 # Footer
 st.markdown("---")
-st.caption("Punuar si pjesë e temës së diplomës në Fakultetin e Teknologjisë së Informacionit.")")
+st.caption("Punuar si pjesë e temës së diplomës në Fakultetin e Teknologjisë së Informacionit.)")")
